@@ -42,7 +42,7 @@ router.post('/create', (req, res, next) => {
 // update route for updating one user information based on id
 router.put('/update/:id', (req, res, next) => {
   apiService.update(req.params.id, req.body).then(() => {
-    res.end()
+    res.status(204).send('Item updated')
   })
     .catch((err) => {
       sendError(err, res)
@@ -52,7 +52,7 @@ router.put('/update/:id', (req, res, next) => {
 // delete route for deleting one user based on id
 router.delete('/delete/:id', (req, res, next) => {
   apiService.delete(req.params.id).then(() => {
-    res.end()
+    res.status(204).send('Item deleted')
   })
     .catch((err) => {
       sendError(err, res)
