@@ -10,53 +10,33 @@ const sendError = (err, res) => {
 }
 
 // users route for getting all users
-router.get('/users', (req, res, next) => {
-  apiService.getAll().then((user) => {
-    res.send(user)
-  })
-    .catch((err) => {
-      sendError(err, res)
-    })
+router.get('/users', async (req, res, next) => {
+  const users = await apiService.getAll();
+  res.send(users)
 })
 
 // user route for getting user information based on id passed
-router.get('/user/:id', (req, res, next) => {
-  apiService.getById(req.params.id).then((user) => {
-    res.send(user)
-  })
-    .catch((err) => {
-      sendError(err, res)
-    })
+router.get('/user/:id', async (req, res, next) => {
+  const user = await apiService.getById(req.params.id);
+  res.send(user);
 })
 
 // create route for creating one user based on the userinformation passed through req.body
-router.post('/create', (req, res, next) => {
-  apiService.create(req.body).then(() => {
-    res.status(201).send('Created an item')
-  })
-    .catch((err) => {
-      sendError(err, res)
-    })
+router.post('/create', async (req, res, next) => {
+  await apiService.create(req.body);
+  res.status(201).send('Created an item');
 })
 
 // update route for updating one user information based on id
-router.put('/update/:id', (req, res, next) => {
-  apiService.update(req.params.id, req.body).then(() => {
-    res.status(204).send('Item updated')
-  })
-    .catch((err) => {
-      sendError(err, res)
-    })
+router.put('/update/:id', async (req, res, next) => {
+  await apiService.update(req.params.id, req.body);
+  res.status(204).send('Item updated');
 })
 
 // delete route for deleting one user based on id
-router.delete('/delete/:id', (req, res, next) => {
-  apiService.delete(req.params.id).then(() => {
-    res.status(204).send('Item deleted')
-  })
-    .catch((err) => {
-      sendError(err, res)
-    })
+router.delete('/delete/:id', async (req, res, next) => {
+  await apiService.delete(req.params.id);
+  res.status(204).send('Item deleted');
 })
 
 module.exports = router
